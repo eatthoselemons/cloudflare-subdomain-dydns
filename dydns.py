@@ -63,13 +63,15 @@ url = zone_url + '/' + zone_id + '/dns_records?type=A&name=' + sub_domain +'.'+ 
 r = requests.get(url, headers=headers)
 sub_domain_id = r.json()['result'][0]['id']
 
-#update the sub domain address
-url = zone_url + '/' + zone_id + '/dns_records/' + sub_domain_id 
-r = requests.put(url,headers=headers,json=json)
-
 #verify that the ip addresses are the same 
 url = zone_url + '/' + zone_id + '/dns_records?type=A&name=' + sub_domain + '.' + domain_name
 r = requests.get(url, headers=headers)
-print("checking if the sub domain is correct")
-print("ip4.me address: {}".format(ip_addr))
-print("cloudflare ip address: {}".format(r.json()['result'][0]['content']))
+if( ip_addr == r.json()['result'][0]['content']):
+    print("checking if the sub domain is correct")
+    print("ip4.me address: {}".format(ip_addr))
+    print("cloudflare ip address: {}".format(r.json()['result'][0]['content']))
+else:
+    #update the sub domain address
+    url = zone_url + '/' + zone_id + '/dns_records/' + sub_domain_id 
+    r = requests.put(url,headers=headers,json=json)
+    print('changed the ip address to: {}'.format(ip_addr))
