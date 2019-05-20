@@ -16,5 +16,5 @@ run: `~/ contab -e`
 
 Append the following and save it should let you know the cron has been saved
 
-*/5 * * * * /usr/bin/python3 /home/<user>/<git location>/dydns.py
+*/5 * * * * /usr/bin/python3 /home/<user>\<git location\>/dydns.py
 
